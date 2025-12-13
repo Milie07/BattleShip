@@ -1,19 +1,17 @@
 # BattleShip
 Student project which takes up the game of Battleship
 
-## Développement avec Docker
-
 ### Prérequis
 - Docker
 - Docker Compose
 
-### Démarrage rapide (une seule commande)
+### Démarrage rapide en dev
 
 ```bash
 docker compose up -d
 ```
 
-L'application sera accessible sur [http://localhost:8080](http://localhost:8080)
+Le projet est accessible sur [http://localhost:8080](http://localhost:8080)
 
 ### Commandes utiles
 
