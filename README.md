@@ -1,6 +1,38 @@
 # BattleShip
- Student project which takes up the game of Battleship
+Student project which takes up the game of Battleship
 
-# Conteneurisation
-`docker build -t battleship .`
-`docker run -d -p 80:80 -v "c:/Users/Nico/projets/BattleShip:/var/www/html" --name battleship-game battleship`
+## Développement avec Docker
+
+### Prérequis
+- Docker
+- Docker Compose
+
+### Démarrage rapide (une seule commande)
+
+```bash
+docker compose up -d
+```
+
+L'application sera accessible sur [http://localhost:8080](http://localhost:8080)
+
+### Commandes utiles
+
+```bash
+# Démarrer le projet
+docker compose up -d
+
+# Voir les logs
+docker compose logs -f
+
+# Arrêter le projet
+docker compose down
+
+# Rebuild après modification du Dockerfile
+docker compose up -d --build
+```
+
+### Notes
+- Les modifications des fichiers sont visibles immédiatement (pas besoin de rebuild)
+- Le projet utilise le port 8080 par défaut
+- Pour changer le port, modifier `ports: - "8080:80"` dans docker-compose.yml
+- Fonctionne sur Windows, macOS et Linux sans modification
