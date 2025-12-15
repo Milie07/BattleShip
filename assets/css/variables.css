@@ -1,0 +1,18 @@
+:root {
+  /* Background */
+  --background-image: url(/assets/img/fond.jpg);
+  /* Font */
+  --police: 'Carter One', sans-serif;
+  --police-color: #fffff1;
+  --h1-desktop-size: 3rem;
+  /* Colors */
+  --gray: #D2E2E9;
+  --skyBlue: #B8E6FF;
+  --seaBlue: #52A1D3;
+  --blue: #0A4270;
+  --darkBlue: #062640;
+  --aircraftCarrier: #FFCC00;
+  --cruiser: #FF8D28;
+  --torpedoBoat: #CB30E0;
+  --destroyer: #34C759;
+}

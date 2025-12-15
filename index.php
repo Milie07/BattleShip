@@ -5,6 +5,9 @@ include 'class/Player.php';
 include 'class/Shots.php';
 include 'class/Game.php';
 include 'class/AiPlayer.php';
+
+$board = new BoardGame(10);
+
 ?>
 
 <!DOCTYPE html>
@@ -17,32 +20,33 @@ include 'class/AiPlayer.php';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/1c347601e2.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=<?php echo time(); ?>">
     <title>BattleShip</title>
 </head>
 <body>
   <header>
-      <h1>Bienvenue !</h1>
-      <h2>Inscris ton nom et démarre ton aventure maritime !</h2>
-  </header>
-  <main>
-
-    <form action="GET" class="name_form">
-      <input type="text" placeholder="Inscris ton nom !"class="input_name">
+    <h1>Bienvenue !</h1>
+    <h2>Inscris ton nom et démarre ton aventure maritime !</h2>
+    <form action="GET" class="header_form">
+      <input type="text" placeholder="Inscris ton nom !"class="header_input">
       <!-- Soumet le formulaire avec le nom et fait apparaitre la modale du joueur -->
-      <button type="submit"class="main_buttons">
-        <i class="fa-solid fa-play"></i>
+      <div class="header_buttons">
+        <button type="submit"class="buttons">
+          <i class="fa-solid fa-play fa-xl"></i>
+          </button>
+        <button type="reset"class="buttons">
+          <i class="fa-solid fa-arrow-rotate-right fa-xl"></i>
         </button>
-      <button type="reset"class="main_buttons">
-        <i class="fa-solid fa-arrow-rotate-right"></i>
-      </button>
+      </div>
     </form>
+  </header>
 
+  <main>
     <!-- Remaining ships player -->
     <article class="ships_player">
       <h3>Bateaux restants {Joueur 1} </h3>
+      <!-- Affiche les bateaux restants du joueur 1 à gauche -->
       <div class="ships_container">
-        <!-- Affiche les bateaux restants du joueur 1 à gauche -->
         <div class="porte-avion"></div>
         <div class="croiseur"></div>
         <div class="contre-torpilleur"></div>
@@ -53,8 +57,10 @@ include 'class/AiPlayer.php';
     
     <!-- Game board -->
     <div class="game_board">
-      <!-- Affiche la grille de jeu au centre -->
+      <?php $board->displayGrid(10); ?>
     </div>
+      <!-- Affiche la grille de jeu au centre -->
+      
     <!-- Remaining ships computer -->
     <article class="ships_computer">
       <h3>Bateaux restants {Ordinateur} </h3>
@@ -71,6 +77,6 @@ include 'class/AiPlayer.php';
   <footer>
     <p>© 2025 BattleShip - Student Project - Made by Milie</p>
   </footer>
-  <script src="assets/js/app.js"></script>
+  <script src="assets/js/script.js"></script>
 </body>
 </html>

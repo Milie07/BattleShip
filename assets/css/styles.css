@@ -1,10 +1,94 @@
+@import 'variables.css';
+
+/* Général style */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 html {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333; 
+  width: 100%;
+  min-height: 100vh;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  background: var(--background-image)no-repeat center;
+  background-size: cover;
+  color: var(--police-color);
+  font-family: var(--police);
+}
+h1 {
+  font-size: 2rem;
+}
+h2, h3 {
+  font-size: 1.25rem;
+}
+
+/* Header Style */
+header {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.header_input {
+  width: 200px;
+  height: 40px;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: solid 1px var(--darkBlue);
+  font-family: var(--police);
+  font-size: 1rem;
+  color: var(--blue);
+}
+.header_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header_buttons {
+  display: flex;
+  width: 200px;
+  justify-content: space-between;
+}
+.buttons {
+  width: 50px;
+  height: 40px;
+  border-radius: 30px;
+  border: solid 1px var(--darkBlue);
+  background-color: var(--skyBlue);
+}
+.buttons i {
+  color: var(--darkBlue);
+}
+
+/* Main Style */
+article {
+  position: fixed;
+  margin-top: 40px;
+}
+.ships_player {
+  background-color: rgb(225, 65, 212);
+  left: 0;
+}
+
+.ships_computer {
+  background-color: coral;
+  right: 0;
+}
+/* GameBoard */
+
+
+/* Footer Style */
+footer p{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.9rem;
+  color: var(--police-color);
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-top: auto;
 }
