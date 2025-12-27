@@ -1,0 +1,152 @@
+REGLES METIERS (LE QUOI)
+o	Définir les règles du jeu
+  Le joueur joue contre l’ordinateur.
+  Le joueur choisit le placement des ses bateaux sur sa grille et sauvegarde son choix.
+  Le jeu démarre quand le joueur a choisi le placement de ses bateaux.
+  Le joueur commence en choisissant une case du plateau vide . Ensuite vient le tour de l’ordinateur. (tout par tour)
+  Si un tir tombe sur un bateau de l’adversaire alors il peut recommencer à tirer jusqu’à ce qu’il rate.
+  Si le tir rate son coup alors c’est à l’autre joueur de tirer.
+  Le jeu se termine lorsqu’un des deux joueurs a eu tous les bateaux de l’adversaire.
+o	Définir les contraintes
+  Grille
+	  La grille est composée de 10 x 10 cases avec en colonnes des lettres (A à J) et en lignes des chiffres (1 à 10).
+	  Les bateaux positionnés sur la grille ne peuvent pas se chevaucher tout comme ceux de l’ordinateur même si on ne le voit pas.
+	  Les bateaux ne peuvent pas dépassés la grille.
+	  1 case représente une coordonnée sur la grille
+  Bateaux
+  	Il y a un nombre fixe de bateaux par joueur. (1 porte-avion, 1 croiseur, 2 contre-torpilleurs et un torpilleur).
+  	Les bateaux ont une taille fixe : Le porte-avion fait 5 cases, le croiseur en fait 4 cases, les contre-torpilleurs ont 3 cases chacun et le torpilleur en a 2.
+  	Un bateau peut uniquement être positionné à l’horizontal ou à la verticale.
+  	Un bateau est considéré coulé quand toutes ses cases sont touchées. 
+  Tirs
+	  On ne peut tirer qu’une fois par tour
+	  On ne peut pas tirer 2 fois à la même coordonnée.
+	  On ne peut pas tirer en dehors de la grille
+	  Un tir est représenté par une croix rouge dans la case atteinte que ce soit dans l’eau ou si un bateau est touché mais est indiqué par une phrase « raté », « touché » ou « coulé ».
+  Déroulement
+	  La partie démarre quand le joueur a placé tous ses bateaux sur la grille de la modale.
+	  Les joueurs tirent à tour de rôle.
+	  Un joueur peut rejouer (relancer un tour) tant qu’il touche un bateau.
+	  La partie se termine quand un joueur a coulé tous les bateaux de son adversaire.
+	  L’historique des tirs est conservé jusqu’à la fin de la partie.
+	  Le nombre maximal de tour ne peut pas excéder 100 tirs par joueur (taille de grille).
+	  Quand la partie est gagnée par l’un des joueurs on affiche «nom du joueur gagne la partie »
+	  La partie ne peut pas être nulle.
+o Définir les limites
+  	Il y a une persistance entre les rechargements de page.
+  	On considère que le joueur abandonne si :
+      La page est fermée. 
+      Si on utilise le bouton réinitialise.
+      S’il n’y a plus de mouvement sur la page (une partie a duré de vie d’1 heure max).
+
+LOGIQUE METIER (LE COMMENT CONCEPTUEL)
+o Définir les flux entre les règles métiers
+  Flux principal (déroulement d’une partie)
+    1° Le joueur inscrit son nom dans l’input dédié 
+    2° Le joueur clique sur le bouton démarrer.
+    3° Une modale contenant une grille s’ouvre au clic.
+    4° Le joueur place ses 5 bateaux sur la grille en les faisant glisser dessus.(pas de chevauchement, dans la grille, horizontal ou vertical, validation de 5 bateaux dans la grille)
+    	L’ordinateur place ses bateaux automatiquement en aléatoire (même règle).
+    5° Le joueur clique sur le bouton sauvegarder.
+    6° La modale se ferme au clic.
+    A la fermeture de la modale, Le nom s’affiche à gauche au-dessus des scores représentés par la forme des bateaux.
+    Une petite grille de rappel de positionnement des bateaux du joueur s’affiche en bas à gauche (en dessous des scores du joueur)
+    7° Tour du joueur : Le joueur choisit une case (A1 ou H5 etc…1 case = 1 coordonnée) et clique dessus (validation pas déjà tirée et dans la grille, 1 seul tir) 
+    7°bis : Si le tir ne touche pas un bateau de l’adversaire une croix rouge apparait dans la case (1 case = 1 coordonnée, tir représenté par 1 croix, validation case = coordonnée de bateau) et une phrase s’affiche « Tir raté ».
+    7°ter : Si le tir touche un bateau de l’adversaire, la case du bateau s’affiche et 1 croix rouge s’affiche dessus (1 case = 1 coordonnée, tir représenté par 1 croix, taille fixe par bateau, validation case = coordonnée de bateau, validation nombre de cases touchées coulé ou pas ?). 
+    Le joueur rejoue jusqu’au prochain tir raté (validation nombre de cases touchées, validation case = coordonnée de bateau) 
+    8° Tour de l’ordinateur (mêmes règles) et ainsi de suite.
+    9° Tous les bateaux d’un joueur coulé = fin de la partie
+
+  Flux secondaire
+  Après une tentative de tir invalide on envoie un message d’erreur et relance un tir.
+  Au rechargement de page on récupère l’état sauvegardé.
+  Un abandon détecté signifie une fin de partie et un nettoyage de session.
+
+o Définir les règles partagées
+  Etat de la partie -> En placement (modale), En cours, Terminée
+  Tour actuel -> Tour de l’IA ou Tour du Joueur
+  Grilles des joueurs -> visibilité de la grille de placement pour le joueur avec historique des tirs de l’ordinateur et invisibilité de celle de l’ordinateur. Historique des tirs de l’ordinateur sur la grille principale du jeu.
+  Scores -> nombre de cases touchées (avec une croix) représentant les bateaux qui sont affichées de part et d’autre de la grille pour visualiser les scores. Un bateau coulé = toutes ses cases avec une croix.
+  Compteur de tour -> pour la limite des 100 coups mais invisible.
+  Définir les règles conservées
+  Entre les rechargements de page, il faut sauvegarder : 
+  La position de tous les bateaux (joueur + ordinateur).
+  Tous les tirs effectués (coordonnées + résultats)
+  L’état actuel de la partie
+  Le timestamp de la dernière action (pour détecter l’abandon après 1 heure)
+
+o Définir l’articulation entre les règles
+  Règle "placement" + "début de partie"
+    placement → Tous les bateaux placés (5) → validation de non-chevauchement par bateau → horizontal ou vertical -> état passe à "en cours" → IA place ses bateaux en random 
+    début de partie → Le tour du joueur commence.
+
+  Règle "tir sur bateau" + "rejouer si touché"
+    tir sur bateau → Un tir touche un bateau → vérifier si coulé → incrémenter compteur de tirs du bateau 
+    rejouer si touché → si coulé, vérifier victoire → si touché (pas coulé), c'est encore au même joueur de jouer 
+    -> sinon le tour s’arrête
+
+  Règle "100 tirs max" + "fin de partie"
+    100 tirs max → Après chaque tir → incrémenter compteur → si compteur atteint 100 → forcer fin de partie 
+    fin de partie → déterminer gagnant selon nombre de bateaux coulés 
+                  → tous les bateaux d'un joueur sont coulés
+
+COMPOSANTS METIERS (LE COMMENT TECHNIQUE)
+Identifier les entités
+6 entités :
+-	L’entité « Partie » -> qui gère le déroulement général d’une partie
+    Gestion de l'état de la partie (Placement - En cours - Terminé)
+    Gestion de l'alternance des tours de jeu
+    Gestion du démarrage de partie après le placement
+    Vérification des conditions de victoire
+    Gestion du compteur de tours (limite 100)
+    Gestion de la persistence (sauvegarde/chargement session)
+    Détection d'abandon (timestamp)
+
+-	L’entité « Bateau » -> qui gère les différents bateaux
+    Définition des types et tailles de bateaux
+    Stockage des positions (coordonnées)
+    Stockage de l'orientation (vertical/horizontal)
+    Compter le nombre de touche reçue par bateau ()
+    Vérification si bateau coulé (touche par bateau)
+    Validation du placement (chevauchement, hors grille)
+
+-	L’entité « Joueur » -> qui gère le joueur qui s’inscrit
+    Stockage du nom 
+    Placement des bateaux sur la grille
+    Grille de placement du joueur
+    Effectuer un tir en choisissant des coordonnées 
+    Visualisation de l'historique des tirs du joueur
+
+-	L’entité « Ordinateur » -> qui gère le rôle de l’ordinateur
+    Placement automatique en random des bateaux
+    Tirs automatiques selon coordonnées random
+    Stratégie de tirs aléatoire 
+
+-	L’entité « Tirs » -> qui gère les tirs des différents joueurs
+    Stockage une coordonnées de tirs
+    Stockage du résultat (Réussi - Raté - Coulé)
+    Stockage de quel joueur a tiré
+    Validation du tir (pas de tir aux mêmes coordonnées)
+
+
+-	L’entité « Grille » -> qui gère la structure de la grille
+
+Répartir les responsabilités
+  En JS :
+  Ouverture de la modale
+  Placement des bateaux en drag and drop
+  Envoi AJAX des formulaires pour éviter le rechargement complet
+  Animation de la croix rouge 
+
+  En PHP :
+  Validation des placements de bateaux
+  Validation des tirs
+  Détermination raté/touché/coulé
+  Gestion des tours
+  Vérification de victoire
+  Persistence (session)
+  Placement automatique IA
+  Choix des tirs IA
+
+

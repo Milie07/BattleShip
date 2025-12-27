@@ -41,6 +41,7 @@ header {
   font-family: var(--police);
   font-size: 1rem;
   color: var(--blue);
+  text-align: center;
 }
 .header_form {
   display: flex;
