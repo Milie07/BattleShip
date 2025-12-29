@@ -72,13 +72,35 @@ article {
 .ships_player {
   background-color: rgb(225, 65, 212);
   left: 0;
+  top: 220px;
 }
-
 .ships_computer {
   background-color: coral;
   right: 0;
+  top: 220px;
 }
 /* GameBoard */
+.game_board {
+  width: 600px;
+  margin: 50px auto;
+}
+table {
+  margin: auto;
+  background-color: transparent;
+  color: var(--darkBlue)
+}
+th, td {
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--seaBlue);
+}
+th{
+  background-color: var(--skyBlue);
+}
+td{
+  background-color: var(--darkBlue);
+}
+
 
 
 /* Footer Style */
