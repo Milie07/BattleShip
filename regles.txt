@@ -9,17 +9,18 @@ o	Définir les règles du jeu
   Le jeu se termine lorsqu’un des deux joueurs a eu tous les bateaux de l’adversaire.
 o	Définir les contraintes
   Grille
-	  La grille est composée de 10 x 10 cases avec en colonnes des lettres (A à J) et en lignes des chiffres (1 à 10).
+	  La grille est composée de 10 x 10 cases avec en lignes des lettres (A à J) et en colonnes des chiffres (1 à 10).
 	  Les bateaux positionnés sur la grille ne peuvent pas se chevaucher tout comme ceux de l’ordinateur même si on ne le voit pas.
 	  Les bateaux ne peuvent pas dépassés la grille.
 	  1 case représente une coordonnée sur la grille
   Bateaux
-  	Il y a un nombre fixe de bateaux par joueur. (1 porte-avion, 1 croiseur, 2 contre-torpilleurs et un torpilleur).
-  	Les bateaux ont une taille fixe : Le porte-avion fait 5 cases, le croiseur en fait 4 cases, les contre-torpilleurs ont 3 cases chacun et le torpilleur en a 2.
+  	Il y a un nombre fixe de bateaux par joueur. (1 aircraftCarrier, 1 cruiser, 2 destroyers et un torpedoBoat).
+  	Les bateaux ont une taille fixe : Le aircraftCarrier fait 5 cases, le cruiser en fait 4 cases, les destroyers ont 3 cases chacun et le torpedoBoat en a 2.
   	Un bateau peut uniquement être positionné à l’horizontal ou à la verticale.
   	Un bateau est considéré coulé quand toutes ses cases sont touchées. 
   Tirs
-	  On ne peut tirer qu’une fois par tour
+    Un tir peut être RATE ou REUSSI
+	  On ne peut tirer qu’une fois par tour en cas de tir raté if(!REUSSI)
 	  On ne peut pas tirer 2 fois à la même coordonnée.
 	  On ne peut pas tirer en dehors de la grille
 	  Un tir est représenté par une croix rouge dans la case atteinte que ce soit dans l’eau ou si un bateau est touché mais est indiqué par une phrase « raté », « touché » ou « coulé ».
@@ -77,7 +78,7 @@ o Définir les règles partagées
   Le timestamp de la dernière action (pour détecter l’abandon après 1 heure)
 
 o Définir l’articulation entre les règles
-  Règle "placement" + "début de partie"
+  Règle "placement" + "début de partie" - Game.php - 
     placement → Tous les bateaux placés (5) → validation de non-chevauchement par bateau → horizontal ou vertical -> état passe à "en cours" → IA place ses bateaux en random 
     début de partie → Le tour du joueur commence.
 
@@ -94,45 +95,131 @@ o Définir l’articulation entre les règles
 COMPOSANTS METIERS (LE COMMENT TECHNIQUE)
 Identifier les entités
 6 entités :
--	L’entité « Partie » -> qui gère le déroulement général d’une partie
-    Gestion de l'état de la partie (Placement - En cours - Terminé)
-    Gestion de l'alternance des tours de jeu
-    Gestion du démarrage de partie après le placement
-    Vérification des conditions de victoire
-    Gestion du compteur de tours (limite 100)
-    Gestion de la persistence (sauvegarde/chargement session)
-    Détection d'abandon (timestamp)
+-	L’entité « Game.php" -> qui gère le déroulement général d’une partie
+    Stockage des tours de jeu - string $nextTurn
+    Stockage du status de la partie - enum $statusGame (PLACEMENT, EN_COURS, TERMINÉ)
+    Stockage du gagnant - string $winner
+    Stockage du perdant - string $loser
 
--	L’entité « Bateau » -> qui gère les différents bateaux
-    Définition des types et tailles de bateaux
-    Stockage des positions (coordonnées)
-    Stockage de l'orientation (vertical/horizontal)
-    Compter le nombre de touche reçue par bateau ()
-    Vérification si bateau coulé (touche par bateau)
-    Validation du placement (chevauchement, hors grille)
+    Gestion du démarrage de partie après le placement - startGame() -> sert à démarrer le jeu une fois les bateaux plaçés
+    Gestion de l'état de la partie - checkStatusGame() -> sert à vérifier le status de la partie
+    Gestion de l'alternance des tours de jeu - checkAlternatingTurnsGame() -> sert à gérer l'alternance des tours en fonction des tirs (TOUCHÉ, RATÉ, COULÉ)
+    Vérification des conditions de victoire - checkVictoriesConditions() -> sert à vérifier si le joueur remplit les conditions pour gagner (tous les bateaux COULÉ ou plus de bateaux COULÉ que l'adversaire)
+    Gestion du compteur de tours (limite 100) - checkLapCounter() -> sert à ne pas dépasser la limite de 100 coups (= fin du jeu)
+    Gestion de la persistence (sauvegarde/chargement session) - managePersistence() -> sert à conserver en localStorage le status de la partie, la positon des bateaux des joueurs, les tirs etc..
+    Détection d'abandon (timestamp) - detectAbandonment() -> sert à vérifier si un joueur abandonne (plus de 60 minutes d'inactivité sur la page)
 
--	L’entité « Joueur » -> qui gère le joueur qui s’inscrit
-    Stockage du nom 
-    Placement des bateaux sur la grille
-    Grille de placement du joueur
-    Effectuer un tir en choisissant des coordonnées 
-    Visualisation de l'historique des tirs du joueur
+-	L’entité « Ships.php » -> qui gère les bateaux par défaut 
+    Stockage du type - string $type
+    Stockage de la taille - int $size
+    Stockage des coordonnées - array $coordShips [$row[], $column[]]
+    Stockage de l'orientation - bool $orientation
+    Stockage des coups - int default 0
 
--	L’entité « Ordinateur » -> qui gère le rôle de l’ordinateur
-    Placement automatique en random des bateaux
-    Tirs automatiques selon coordonnées random
-    Stratégie de tirs aléatoire 
+    Vérifier si le bateau est coulé - isSunk() 
+    Vérifier si tous les bateaux sont coulés - allShipsSunk()
+  
+-	L’entité « Player.php » -> qui gère le joueur et son jeu
+    Stockage du nom - string $playerName -> récupération du formulaire OK
+    Stockage Grille de placement du joueur - array $playerGrid -> petite grille générée avec points représentants les bateaux positionnés
+    Création et Stockage des bateaux du joueur - array $playerShipsOnGrid -> tableau de coordonnées des bateaux du joueur
 
--	L’entité « Tirs » -> qui gère les tirs des différents joueurs
-    Stockage une coordonnées de tirs
-    Stockage du résultat (Réussi - Raté - Coulé)
-    Stockage de quel joueur a tiré
-    Validation du tir (pas de tir aux mêmes coordonnées)
+    Placement des bateaux sur la grille - placeShips() - récupération de la position des bateaux réalisés en DRAG & DROP en JS par le joueur
+    Affichage de la petite grille du joueur $playerGrid - showPlayerGrid() -> sert à créer et afficher la grille du joueur
+    Validation du placement (chevauchement, hors grille, coordonnées) - validateShipPlacement() -> sert à valider le bon placement des bateaux des 2 joueurs
+    Effectuer un tir en choisissant des coordonnées - chooseShotCoordinates() -> sert à effectuer un tir en choisissant des coordonnées x (row[] de la classe BoardGame) et y (column[] de la classe BoardGame)
+    Visualisation de l'historique des tirs du joueur - viewPlayerShotsHistory() -> sert à conserver un historique des tirs du joueur (liste de coordonnées [])
+    Vérification si 1 bateau du joueur est coulé (touche par bateau) - checkSunkShip() -> sert à vérifier si un bateau est COULÉ (par rapport à sa taille, aux nombres de coups, coordonnées du bateau)
 
+-	L’entité « AiPlayer.php » -> classe étendue de Player qui gère le rôle de l’ordinateur 
+    Stockage positions des bateaux du joueur - array $aiShips -> tableau de coordonnées aléatoires des bateaux de l'ordinateur
 
--	L’entité « Grille » -> qui gère la structure de la grille
+    Mêmes méthodes mais en random pour le placement des bateaux et les coordonnées des tirs
+    
+-	L’entité « Shots.php » -> qui représente un tir
+    Stockage de qui a tiré - string $shooter
+    Stockage des coordonnées de tir - array $coordShot
+    Stockage du résultat de tir - enum (RATÉ, REUSSI) $shotResult
 
-Répartir les responsabilités
+    Vérifier où le tir a eu lieu - checkPlayerShot() -> sert à vérifier le tir du joueur
+      Stockage du résultat de tir - bool $compareShot -> comparaison de coordonnées # A2 == A1 -> false
+    Validation du tir (pas de tir aux mêmes coordonnées) - validateShot() -> sert à vérifier que le tir du joueur n'est pas réalisé 2 fois aux mêmes coordonnées
+
+-	L’entité « BoardGame.php » -> qui gère la structure de la grille 
+    Stockage de la grille principale - objet $grid
+    Stockage des lignes (A à J) - array $row
+    Stockage des colonnes (1 à 10) - array $column
+    Stockage de la taille de grille (10x10) - int $size
+
+    Créer la structure 10x10 (A-J, 1-10) - CreateBoard() -> sert à créer la grille principale 
+    Récupérer les positions des bateaux - getShipsPositions() -> sert à récupérer les positions des bateaux du joueur et de l'ordinateur -> 
+    liste de positions 
+    [playerShips[
+                  aircraftCarrier [
+                                  row[], column[],
+                                  row[], column[],
+                                  row[], column[],
+                                  row[], column[],
+                                  row[], column[] 
+                  ],
+                  cruiser[
+                          row[], column[],
+                          row[], column[],
+                          row[], column[],
+                          row[], column[]
+                  ],
+                  destroyer1[
+                              row[], column[],
+                              row[], column[],
+                              row[], column[]
+                  ],
+                  destroyer2[
+                              row[], column[],
+                              row[], column[],
+                              row[], column[]
+                  ],
+                  torpedoBoat[
+                            row[], column[],
+                            row[], column[]
+                  ]
+                ]
+    ],
+    aiShips[  aircraftCarrier [
+                                row[], column[],
+                                row[], column[],
+                                row[], column[],
+                                row[], column[],
+                                row[], column[] 
+              ],
+              cruiser[
+                      row[], column[],
+                      row[], column[],
+                      row[], column[],
+                      row[], column[]
+              ],
+              destroyer1[
+                          row[], column[],
+                          row[], column[],
+                          row[], column[]
+              ],
+              destroyer2[
+                          row[], column[],
+                          row[], column[],
+                          row[], column[]
+              ],
+              torpedoBoat[
+                        row[], column[],
+                        row[], column[]
+              ]
+    ]
+
+    Stocker l'historique des tirs (via shots.php) - stockShotsHistory()
+
+    Générer le HTML de la grille - displayGrid() -> sert à afficher la grille principale
+    Valider qu'une coordonnée existe dans la grille - validateCoordinates() -> sert à valider qu'une coordonnée existe [row[], column[]] = true
+    Vérifier si une coordonnée contient un bateau - validateCoordinatesShipsAffected() -> sert à vérifier que si la coordonnée choisie contient une coordonnée de bateau
+
+  Répartir les responsabilités
   En JS :
   Ouverture de la modale
   Placement des bateaux en drag and drop

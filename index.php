@@ -1,13 +1,19 @@
 <?php
 include 'class/Ships.php';
 include 'class/BoardGame.php';
-include 'class/Player.php';  
+include 'class/Player.php';
 include 'class/Shots.php';
 include 'class/Game.php';
 include 'class/AiPlayer.php';
 
+use App\class\BoardGame;
+use App\class\Player;
+
 $board = new BoardGame(10);
 
+// Récupérer le nom du joueur depuis le formulaire
+$playerName = isset($_GET['name']) && !empty($_GET['name']) ? $_GET['name'] : null;
+$player = $playerName ? new Player($playerName) : null;
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +33,8 @@ $board = new BoardGame(10);
   <header>
     <h1>Bienvenue !</h1>
     <h2>Inscris ton nom et démarre ton aventure maritime !</h2>
-    <form action="GET" class="header_form">
-      <input type="text" placeholder="Inscris ton nom !"class="header_input">
+    <form method="GET" action="index.php" class="header_form">
+      <input type="text" name="name" placeholder="Inscris ton nom !"class="header_input">
       <!-- Soumet le formulaire avec le nom et fait apparaitre la modale du joueur -->
       <div class="header_buttons">
         <button type="submit"class="buttons">
@@ -44,20 +50,20 @@ $board = new BoardGame(10);
   <main>
     <!-- Remaining ships player -->
     <article class="ships_player">
-      <h3>Bateaux restants {Joueur 1} </h3>
+      <h3>Bateaux restants <?php echo $player ? htmlspecialchars($player->getPlayerName()) : 'Joueur'; ?></h3>
       <!-- Affiche les bateaux restants du joueur 1 à gauche -->
       <div class="ships_container">
-        <div class="porte-avion"></div>
-        <div class="croiseur"></div>
-        <div class="contre-torpilleur"></div>
-        <div class="sous-marin"></div>
-        <div class="torpilleur"></div>
+        <div class="aircraftCarrier"></div>
+        <div class="cruiser"></div>
+        <div class="destroyer1"></div>
+        <div class="destroyer2"></div>
+        <div class="torpedoBoat"></div>
       </div>
     </article>
     
     <!-- Game board -->
     <div class="game_board">
-      <?php $board->displayGrid(10); ?>
+      <?php echo $board->displayGrid(); ?>
     </div>
       <!-- Affiche la grille de jeu au centre -->
       
@@ -66,17 +72,17 @@ $board = new BoardGame(10);
       <h3>Bateaux restants {Ordinateur} </h3>
       <div class="ships_container">
         <!-- Affiche les bateaux restants de l'ordianteur à droite-->
-        <div class="porte-avion"></div>
-        <div class="croiseur"></div>
-        <div class="contre-torpilleur"></div>
-        <div class="sous-marin"></div>
-        <div class="torpilleur"></div>
+        <div class="aircraftCarrier"></div>
+        <div class="cruiser"></div>
+        <div class="destroyer1"></div>
+        <div class="destroyer2"></div>
+        <div class="torpedoBoat"></div>
       </div>
     </article>
   </main>
   <footer>
     <p>© 2025 BattleShip - Student Project - Made by Milie</p>
   </footer>
-  <script src="assets/js/script.js"></script>
+  <script src="/assets/js/script.js" type="module"></script>
 </body>
 </html>
