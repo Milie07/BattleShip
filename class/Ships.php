@@ -58,9 +58,17 @@ class Ships {
     $this->hits = $hits;
   }
 
+  public function isSunk(): void
+  {
+    # à implémenter
+  }
   public function hit(): void
   {
-    
+    # à implémenter
+  }
+  public function allShipsSunk(): void
+  {
+    # à implémenter
   }
 
 
