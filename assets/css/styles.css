@@ -1,4 +1,6 @@
 @import 'variables.css';
+@import 'ships.css';
+@import 'modale.css';
 
 /* Général style */
 * {
@@ -59,31 +61,25 @@ header {
   border-radius: 30px;
   border: solid 1px var(--darkBlue);
   background-color: var(--skyBlue);
+  cursor: pointer;
 }
 .buttons i {
   color: var(--darkBlue);
 }
 
 /* Main Style */
-article {
-  position: fixed;
-  margin-top: 40px;
+main {
+  display: flex;
+  justify-content: space-between;
 }
-.ships_player {
-  background-color: rgb(225, 65, 212);
-  left: 0;
-  top: 220px;
-}
-.ships_computer {
-  background-color: coral;
-  right: 0;
-  top: 220px;
-}
-/* GameBoard */
-.game_board {
-  width: 600px;
+section {
   margin: 50px auto;
+  text-align: center;
+  border: 1px solid black;
+  
 }
+
+/* Grille */
 table {
   margin: auto;
   background-color: transparent;
@@ -99,9 +95,8 @@ th{
 }
 td{
   background-color: var(--darkBlue);
+    cursor: pointer;
 }
-
-
 
 /* Footer Style */
 footer p{
