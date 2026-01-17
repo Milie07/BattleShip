@@ -1,5 +1,5 @@
 # BattleShip
-Student project which takes up the game of Battleship
+Projet Etudiant qui reprend le jeu de bataille navale pour pratiquer le PHP et la POO.
 
 ### Prérequis
 - Docker
