@@ -1,3 +1,9 @@
 # Environnement
 .DS_Store
 Thumbs.db
+
+# Packages
+node_modules  
+vendor
+
+docs

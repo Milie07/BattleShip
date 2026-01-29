@@ -1,0 +1,102 @@
+/* Media queries Tablet */
+
+@media (width >= 769px) and (width <= 1199px) {
+  /* Titles */
+  h1 {
+    font-size: var(--h1-tablet-size);
+  }
+
+  h2 {
+    font-size: var(--h2-tablet-size);
+  }
+
+  h3 {
+    font-size: var(--h3-tablet-size);
+  }
+
+  /* Main Style */
+  main {
+    flex-direction: column;
+  }
+  
+  /* ships.css */
+  .aircraft-carrier,
+  .cruiser,
+  .torpedo-boat,
+  .destroyer1,
+  .destroyer2 {
+    height: 40px;
+    margin: 15px;
+  }
+
+  .ship-cell {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+  }
+
+  .aircraft-carrier {
+    width: 200px;
+  }
+
+  .cruiser {
+    width: 160px;
+  }
+
+  .destroyer1,
+  .destroyer2 {
+    width: 120px;
+  }
+
+  .torpedo-boat {
+    width: 80px;
+  }
+
+  /* Grille */
+  table {
+    width: 440px;
+    height: 440px;
+  }
+
+  th,td {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 600px;
+  }
+
+    /* Grille en haut */
+  .game-board {
+    margin-top: 60px;
+  }
+
+  section.ships {
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .ships-player h3 {
+    margin-left: 0;
+  }
+  
+  .ships-computer h3 {
+    margin-right: 0;
+  }
+
+  /* Mini-grille remontée au centre entre les 2 containers */
+  .mini-grid {
+    width: 165px;
+    height: 165px;
+    bottom: 80px; /* Ajuster selon la hauteur des bateaux */
+  }
+
+  .mini-grid th,
+  .mini-grid td {
+    width: 15px;
+    height: 15px;
+    font-size: 6px;
+  }
+}

@@ -1,6 +1,7 @@
-@import 'variables.css';
-@import 'ships.css';
-@import 'modale.css';
+@import url("variables.css");
+@import url("styles_desktop.css");
+@import url("styles_mobile.css");
+@import url("styles_tablet.css");
 
 /* Général style */
 * {
@@ -8,105 +9,499 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 }
+
 body {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--background-image)no-repeat center;
-  background-size: cover;
+  background: var(--background-image) no-repeat center center fixed;
   color: var(--police-color);
   font-family: var(--police);
 }
-h1 {
-  font-size: 2rem;
+
+main {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
-h2, h3 {
-  font-size: 1.25rem;
+
+section.ships {
+  display: flex;
+}
+
+/* section h2 hidden pour le SEO */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  border: 0;
 }
 
 /* Header Style */
 header {
   text-align: center;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--background);
 }
-.header_input {
+
+.header-input {
   width: 200px;
   height: 40px;
   padding: 10px;
   margin: 10px 0;
   border-radius: 8px;
-  border: solid 1px var(--darkBlue);
-  font-family: var(--police);
-  font-size: 1rem;
+  border: var(--border);
+  font-size: var(--h3-mobile-size);
   color: var(--blue);
   text-align: center;
 }
-.header_form {
+
+.header-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.header_buttons {
+
+.header-buttons {
   display: flex;
   width: 200px;
   justify-content: space-between;
 }
+
 .buttons {
   width: 50px;
   height: 40px;
   border-radius: 30px;
-  border: solid 1px var(--darkBlue);
-  background-color: var(--skyBlue);
+  border: var(--border);
+  background-color: var(--sky-blue);
+  transition:
+    transform 0.7s ease-in-out,
+    box-shadow 0.3s ease;
   cursor: pointer;
 }
+
+.buttons:hover {
+  color: var(--police-color);
+  background-color: var(--dark-blue);
+  border: var(--dark-blue);
+  box-shadow: var(--shadow-hover);
+}
+
 .buttons i {
-  color: var(--darkBlue);
+  color: var(--dark-blue);
 }
 
-/* Main Style */
-main {
+.buttons i:hover {
+  color: var(--police-color);
+}
+
+/* Bouton reset (lien stylisé comme un bouton) */
+.reset-btn {
   display: flex;
-  justify-content: space-between;
-}
-section {
-  margin: 50px auto;
-  text-align: center;
-  border: 1px solid black;
-  
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
 }
 
-/* Grille */
+/* Grid style */
+.game-board {
+  width: 100%;
+}
+
 table {
   margin: auto;
   background-color: transparent;
-  color: var(--darkBlue)
+  color: var(--dark-blue);
+  box-shadow: var(--shadow-hover);
 }
-th, td {
-  width: 50px;
-  height: 50px;
-  border: 1px solid var(--seaBlue);
+
+th,
+td {
+  border: 1px solid var(--sea-blue);
+  font-family: var(--police-grid);
+  font-size: 20px;
+  font-weight: lighter;
 }
-th{
-  background-color: var(--skyBlue);
+
+th {
+  background-color: var(--sky-blue);
 }
-td{
-  background-color: var(--darkBlue);
-    cursor: pointer;
+
+td {
+  border: var(--border-grid);
+  background-color: var(--dark-blue);
+  cursor: pointer;
+  position: relative;
+}
+
+/* ships container style */
+section.ships-player,
+section.ships-computer {
+  display: flex;
+  flex-direction: column;
+}
+
+.ships-player h3 {
+  margin-left: 15px;
+}
+
+.ships-player {
+  justify-items: flex-start;
+}
+
+.ships-computer h3 {
+  margin-right: 15px;
+}
+
+.ships-computer {
+  justify-items: flex-end;
+}
+
+.ships-container-player, .ships-container-computer {
+  display: flex;
+  flex-direction: column;
+}
+
+.ships-container-computer {
+  align-items: flex-end;
+}
+
+/* Mini-grille de rappel */
+.mini-grid {
+  position: relative;
+  border-collapse: collapse;
+}
+
+.mini-grid-container {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.mini-grid-container h4 {
+  margin-bottom: 10px;
+  color: var(--police-color);
+}
+
+.mini-grid th,
+.mini-grid td {
+  padding: 0;
+  text-align: center;
+}
+
+.mini-grid th {
+  background-color: var(--sky-blue);
+}
+
+.mini-cell {
+  background-color: var(--dark-blue);
+  position: relative;
+}
+
+/* Cercle coloré pour les bateaux */
+.mini-cell.ship-placed::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+}
+
+.mini-cell.aircraft-carrier::after {
+  background-color: var(--aircraft-carrier);
+}
+
+.mini-cell.cruiser::after {
+  background-color: var(--cruiser);
+}
+
+.mini-cell.destroyer1::after,
+.mini-cell.destroyer2::after {
+  background-color: var(--destroyer);
+}
+
+.mini-cell.torpedo-boat::after {
+  background-color: var(--torpedo-boat);
+}
+
+/*  Ships */
+.ship {
+  display: flex;
+  border-radius: 60px;
+  background: transparent;
+  overflow: hidden;
+}
+
+.aircraft-carrier,
+.cruiser,
+.destroyer1,
+.destroyer2,
+.torpedo-boat {
+  box-shadow: var(--shadow);
+  border: var(--border);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.aircraft-carrier {
+  background-color: var(--aircraft-carrier);
+}
+
+.cruiser {
+  background-color: var(--cruiser);
+}
+
+.destroyer1,
+.destroyer2 {
+  background-color: var(--destroyer);
+}
+
+.torpedo-boat {
+  background-color: var(--torpedo-boat);
+}
+
+.aircraft-carrier:hover,
+.cruiser:hover,
+.destroyer1:hover,
+.destroyer2:hover,
+.torpedo-boat:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-hover);
 }
 
 /* Footer Style */
-footer p{
-  position: fixed;
+footer p {
   bottom: 0;
   width: 100%;
   font-size: 0.9rem;
   color: var(--police-color);
   text-align: center;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--background);
   margin-top: auto;
+}
+
+/* Modal style */
+.modal {
+  position: fixed;
+  inset: 0;
+  justify-content: center;
+  align-items: flex-start;
+  display: none;
+  overflow-y: auto;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.close-modal-btn {
+  padding: 4px 6px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background: #ff365e;
+  color: var(--police-color);
+}
+
+.modal-content {
+  position: relative;
+  padding: 15px;
+  margin: 20px auto;
+  background: var(--gray);
+  border-radius: 5px;
+}
+
+.modal-content table {
+  margin: 10px;
+}
+
+.modal-content p {
+  color: var(--dark-blue);
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+}
+
+/* Modal Buttons */
+.modal-content .buttons {
+  width: auto;
+  padding: 0 5px;
+  font-family: var(--police);
+  border: var(--border);
+  transition:
+    transform 0.7s ease-in-out,
+    box-shadow 0.3s ease;
+}
+
+.save-button .buttons {
+  width: 120px;
+  margin-top: 20px;
+}
+
+.modal-content .buttons:hover {
+  color: var(--police-color);
+  background-color: var(--dark-blue);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Ships modal */
+.ships-modal {
+  background-color: transparent;
+}
+
+.ship-cell {
+  border: var(--border-grid);
+}
+
+.ship.vertical {
+  flex-direction: column;
+}
+
+.ship.placed {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Ship-cells placées dans la grille */
+td .ship-cell {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  margin: 0;
+}
+
+/* Border-radius Horizontal */
+td .ship-cell.first-cell[data-orientation="horizontal"] {
+  border-radius: 30px 0 0 30px;
+}
+
+td .ship-cell.last-cell[data-orientation="horizontal"] {
+  border-radius: 0 30px 30px 0;
+}
+
+/* Border-radius Vertical */
+td .ship-cell.first-cell[data-orientation="vertical"] {
+  border-radius: 30px 30px 0 0;
+}
+
+td .ship-cell.last-cell[data-orientation="vertical"] {
+  border-radius: 0 0 30px 30px;
+}
+
+td .ship-cell.aircraft-carrier {
+  background-color: var(--aircraft-carrier);
+}
+
+td .ship-cell.cruiser {
+  background-color: var(--cruiser);
+}
+
+td .ship-cell.destroyer1,
+td .ship-cell.destroyer2 {
+  background-color: var(--destroyer);
+}
+
+td .ship-cell.torpedo-boat {
+  background-color: var(--torpedo-boat);
+}
+
+/* Styles pour les tirs */
+td.hit {
+  background-color: var(--dark-blue);
+  position: relative;
+}
+
+td.hit::after {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #3498db;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+td.miss {
+  background-color: var(--dark-blue);
+  position: relative;
+}
+
+td.miss::after {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #e74c3c;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+td.sunk::after {
+  color: #9b59b6;
+}
+
+/* Couleurs des bateaux touchés sur la grille principale */
+td.hit.aircraft-carrier {
+  background-color: var(--aircraft-carrier);
+}
+
+td.hit.cruiser {
+  background-color: var(--cruiser);
+}
+
+td.hit.destroyer1,
+td.hit.destroyer2 {
+  background-color: var(--destroyer);
+}
+
+td.hit.torpedo-boat {
+  background-color: var(--torpedo-boat);
+}
+
+/* Styles pour la mini-grille (tirs reçus) */
+.mini-cell.hit::before {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #3498db;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.mini-cell.miss::before {
+  content: "✕";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #e74c3c;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 10;
 }

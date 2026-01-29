@@ -1,0 +1,111 @@
+/* Media queries Mobile */
+@media (width >= 320px) and (width <= 768px) {
+  /* Titles */
+  h1 {
+    font-size: var(--h1-mobile-size);
+  }
+
+  h2 {
+    font-size: var(--h2-mobile-size);
+  }
+
+  h3 {
+    font-size: var(--h3-mobile-size);
+  }
+
+  /* Main Style */
+  main {
+    flex-direction: column;
+  }
+
+  /* Grille principale */
+  .game-board {
+    margin-top: 20px;
+  }
+  
+  table {
+    width: 275px;
+    height: 275px;
+  }
+
+  th,
+  td {
+    width: 25px;
+    height: 25px;
+  }
+
+  /* Section ships */
+  section.ships {
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .ships-player h3 {
+    margin-left: 0;
+  }
+  
+  .ships-computer h3 {
+    margin-right: 0;
+  }
+
+  /* ships */
+  .aircraft-carrier,
+  .cruiser,
+  .torpedo-boat,
+  .destroyer1,
+  .destroyer2 {
+    height: 25px;
+    margin: 15px;
+  }
+  
+  .ship-cell {
+    width: 25px;
+    height: 25px;
+    background: transparent;
+  }
+
+  .aircraft-carrier {
+    width: 125px;
+  }
+
+  .cruiser {
+    width: 100px;
+  }
+
+  .destroyer1,
+  .destroyer2 {
+    width: 75px;
+  }
+
+  .torpedo-boat {
+    width: 50px;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 295px;
+  }
+
+  .content {
+    flex-direction: column-reverse;
+  }
+
+  /* Mini-grid */
+  .mini-grid {
+    width: 110px;
+    height: 110px;
+    bottom: 80px; 
+  }
+
+  .mini-grid th,
+  .mini-grid td {
+    width: 10px;
+    height: 10px;
+    font-size: 5px;
+  }
+
+  .mini-grid-container {
+    margin: 0;
+    padding: 0;
+  }
+}
