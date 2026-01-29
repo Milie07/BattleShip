@@ -22,4 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function handleModalClick(e){
     e.stopPropagation()
   }
+
+  const btnClose = document.querySelector('.close-modal-btn')
+  btnClose.addEventListener("click", () => {
+    document.body.dataset.openModal = 'false';
+    modal.classList.remove("active")
+  });
 });

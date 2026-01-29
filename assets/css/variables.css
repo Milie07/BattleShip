@@ -1,18 +1,39 @@
 :root {
   /* Background */
-  --background-image: url(/assets/img/fond.jpg);
+  --background-image: url("/assets/img/fond.jpg");
+
+  /* Border */
+  --border: 3px solid rgb(255 255 255 / 30%);
+  --border-grid: 1px solid rgb(255 255 255 / 30%);
+  
+  /* Shadow and BGColor */
+  --shadow: 0 4px 15px rgb(0 0 0 / 30%);
+  --shadow-hover: 0 4px 15px rgb(0 0 0 / 40%);
+  --background: rgb(0 0 0 / 50%);
+
   /* Font */
   --police: 'Carter One', sans-serif;
-  --police-color: #fffff1;
-  --h1-desktop-size: 3rem;
+  --police-grid: 'Barlow', sans-serif;
+  --police-color: rgb(255 255 241);
+  --h1-desktop-size: 3rem; /* 48px */
+  --h2-desktop-size: 2.5rem; /* 40px */
+  --h3-desktop-size: 2rem; /* 32px */
+  --h1-tablet-size: 2.5rem; /* 40px */
+  --h2-tablet-size: 2rem; /* 32px */
+  --h3-tablet-size: 1.5rem; /* 24px */
+  --h1-mobile-size: 2rem; /* 32px */
+  --h2-mobile-size: 1.5rem; /* 24px */
+  --h3-mobile-size: 1rem; /* 16px */
+  --police-size: 0.75rem; /* 12px */
+
   /* Colors */
-  --gray: #D2E2E9;
-  --skyBlue: #B8E6FF;
-  --seaBlue: #52A1D3;
-  --blue: #0A4270;
-  --darkBlue: #062640;
-  --aircraftCarrier: #FFCC00;
-  --cruiser: #FF8D28;
-  --torpedoBoat: #CB30E0;
-  --destroyer: #34C759;
+  --gray: rgb(210 226 233);
+  --sky-blue: rgb(184 230 255);
+  --sea-blue: rgb(82 161 211);
+  --blue: rgb(10 66 112);
+  --dark-blue: rgb(6 38 64);
+  --aircraft-carrier: rgb(255 204 0);
+  --cruiser: rgb(255 141 40);
+  --destroyer: rgb(203 48 224);
+  --torpedo-boat: rgb(52 199 89);
 }

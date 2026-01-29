@@ -1,11 +1,14 @@
 <?php
+
 namespace App\class;
+
+use App\class\Interfaces\BoardInterface;
 
 /**
  * BoardGame - Gère la structure de la grille de jeu (10x10)
- * Responsabilité : UNIQUEMENT la structure et validation des coordonnées
+ * Responsabilité : La structure et la validation des coordonnées
  */
-class BoardGame
+class BoardGame implements BoardInterface
 {
   protected array $grid;
   protected array $row; // Lignes (A-J)
@@ -90,9 +93,9 @@ class BoardGame
    * @param array $shotsHistory Historique des tirs pour afficher les croix
    * @return string HTML de la grille
    */
-  public function displayGrid(array $shotsHistory = []): string
+  public function displayGrid(array $shotsHistory = [], string $gridId = 'PlayerDragAndDrop'): string
   {
-    $html = '<table class="battleship-grid">';
+    $html = '<table class="battleship-grid" id="' . $gridId . '" role="grid" aria-label="Grille de bataille navale">';
 
     // En-tête avec les numéros de colonnes (1-10)
     $html .= '<thead><tr><th></th>';
@@ -114,7 +117,7 @@ class BoardGame
           $cellClass .= ' shot-' . strtolower($shotsHistory[$cellId]);
         }
 
-        $html .= "<td class='$cellClass' data-coord='$cellId'></td>";
+        $html .= "<td class='$cellClass valid-drop' data-coord='$cellId' aria-label='Case $cellId' tabindex='0'></td>";
       }
       $html .= '</tr>';
     }
