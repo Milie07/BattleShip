@@ -5,4 +5,10 @@ docker-compose.yml
 .DS_Store
 .vscode
 *.md
+node_modules
+vendor
+tests
+docs
+fly.toml
+phpunit.xml
 

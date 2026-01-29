@@ -1,12 +1,12 @@
 # BATTLESHIP
 
-Projet d'étude reprenant le jeu classique de la Bataille Navale. Placez vos bateaux et affrontez l'ordinateur !
+Projet d'étude reprenant le jeu classique de la Bataille Navale pour pratiquer essentiellement PHP et mettre en place des composants métiers. 
 
 ---
 
 ## Technologies utilisées
 
-- PHP 8 (POO, interfaces, services)
+- PHP 8.4 (POO, interfaces, services)
 - HTML5
 - CSS3 (responsive design)
 - JavaScript ES6+ (modules, drag & drop)
@@ -20,7 +20,8 @@ Projet d'étude reprenant le jeu classique de la Bataille Navale. Placez vos bat
 - Grille de jeu 10x10 interactive
 - Placement des bateaux via drag & drop
 - Modale de positionnement des bateaux (horizontal/vertical)
-- Affichage des bateaux restants (joueur et ordinateur)
+- Affichage des croix pour les tirs réussis et ratés
+- Affichage des tours avec commentaires
 - Design responsive (mobile et desktop)
 
 ## Installation
@@ -67,10 +68,7 @@ docker compose down
 - Pour changer le port, modifier `ports: - "8080:80"` dans docker-compose.yml
 - Fonctionne sur Windows, macOS et Linux sans modification
 
-## Architecture
-
-### Structure du projet
-
+## Architecture du projet
 ```
 BattleShip/
 ├── index.php                 # Point d'entrée principal
@@ -106,37 +104,43 @@ BattleShip/
 │
 ├── assets/
 │   ├── css/
-│   └── js/
-│
-└── docs/
-    └── architecture/
-        └── class-diagram.md  # Diagramme de classes UML
+│   │   ├──styles_desktop.css
+│   │   ├──styles_mobile.css
+│   │   ├──styles_tablet.css
+│   │   ├──variables.css
+│   │   ├──styles.css
+│   ├── js/
+│   │    ├── models/ 
+│   │    │  ├──styles_desktop.css
+│   │    │  ├──styles_mobile.css
+│   │    │  ├──styles_tablet.css
+│   │    │  ├──variables.css
+│   │    └──script.js
+│   │   
+│   └── img/
+│        └──fond.jpg
+
+
+## Déploiement
+
+### Conteneurisation avec Docker
+- Utilisation de l'image officielle PHP avec Serveur Apache intégré
+- Copie du Code source dans le container
+- Modification du port Apache pour Fly.io
+- Optimisation avec .dockerignore ou j'ai exclu les fichiers inutiles pour réduire la taille de l'image
+
+### Développement local
+```bash
+# Démarrer le conteneur Docker
+docker-compose up -d
+
+# Eteindre le conteneur Docker
+docker-compose down
+
+# Vérifier que tout fonctionne
 ```
 
-### Patterns utilisés
-
-| Pattern | Utilisation |
-|---------|-------------|
-| **Interface** | `PlayerInterface`, `BoardInterface` - Permettent le mocking et l'injection de dépendances |
-| **Service Layer** | `GameService` - Sépare la logique métier des endpoints HTTP |
-| **Héritage** | `AiPlayer extends Player` - Réutilisation du code joueur |
-| **Machine à états** | `Game` gère les états PLACEMENT → EN_COURS → TERMINE |
-
-### Flux de données
-
-```
-[Frontend JS]
-     ↓ POST /api/fire-shot.php
-[Endpoint AJAX]
-     ↓
-[GameService] ← Logique métier
-     ↓
-[Game] → [Player/AiPlayer] → [Ships/Shots]
-     ↓
-[Session PHP] ← Persistence
-```
-
-## Tests
+### Tests
 
 Le projet inclut 44 tests unitaires couvrant :
 
@@ -151,6 +155,34 @@ Le projet inclut 44 tests unitaires couvrant :
 # Résultat attendu
 OK (44 tests, 87 assertions)
 ```
+### Versionning sur Git
+S'assurer que la branche est à jour :
+```
+git status
+```
+Et si ce n'est pas le cas, les modifications sont à commiter.
+```
+git add <fichier à commiter>
+git commit -m "message"
+git push origin main
+```
+
+### Configuration de Fly.io
+1. Création du fichier fly.toml pour la configuration du déploiement
+2. Authentification en ligne de commande à l'application fly.io
+```
+fly auth login
+```
+3. Création et déploiement de l'application sur fly.io
+```
+fly apps create battleship-milie # battleship était déjà pris
+fly deploy
+```
+4. Vérification 
+```
+fly status
+fly logs
+```
 
 ## Améliorations à prévoir
 
@@ -159,9 +191,8 @@ OK (44 tests, 87 assertions)
 - [x] Logique de jeu complète (Game)
 - [x] Tests unitaires PHPUnit
 - [x] Architecture services
-- [ ] Affichage de la Mini-grille à déplacer
+- [ ] Affichage global à améliorer
 - [ ] Gestion visuelle des scores
 - [ ] Gestion du timer
-- [ ] Sauvegarde persistante (base de données)
 - [ ] Mode multijoueur
 - [ ] Animations et effets sonores
