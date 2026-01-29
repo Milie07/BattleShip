@@ -1,0 +1,34 @@
+{
+    "name": "emi/battleship",
+    "description": "Jeu de bataille navale en PHP - Projet professionnel",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Emi"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\class\\": "class/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:coverage": "phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
