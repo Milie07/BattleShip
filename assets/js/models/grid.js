@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStatus("Attendez votre tour...", "warning");
       return;
     }
-
     // Vérifie si la case a déjà été ciblée
     if (cell.classList.contains("hit") || cell.classList.contains("miss")) {
       updateStatus("Vous avez déjà tiré sur cette case !", "warning");

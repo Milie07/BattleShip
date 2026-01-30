@@ -21,37 +21,47 @@
     padding: 10px;
   }
 
-  /* ships.css */
-  .aircraft-carrier,  
-  .cruiser,
-  .torpedo-boat,
-  .destroyer1,
-  .destroyer2 {
+  /* Bateaux dans la modale et page d'accueil (pas ceux placés sur la grille) */
+  .ships-modal .ship,
+  .ships-player .ship,
+  .ships-computer .ship {
     height: 50px;
     margin: 15px;
   }
 
-  .ship-cell {
+  .ships-modal .ship-cell,
+  .ships-player .ship-cell,
+  .ships-computer .ship-cell {
     width: 50px;
     height: 50px;
     border: var(--shaow) 1px solid;
     background: transparent;
   }
 
-  .aircraft-carrier {
+  .ships-modal .aircraft-carrier,
+  .ships-player .aircraft-carrier,
+  .ships-computer .aircraft-carrier {
     width: 250px;
   }
 
-  .cruiser {
+  .ships-modal .cruiser,
+  .ships-player .cruiser,
+  .ships-computer .cruiser {
     width: 200px;
   }
 
-  .destroyer1,
-  .destroyer2 {
+  .ships-modal .destroyer1,
+  .ships-modal .destroyer2,
+  .ships-player .destroyer1,
+  .ships-player .destroyer2,
+  .ships-computer .destroyer1,
+  .ships-computer .destroyer2 {
     width: 150px;
   }
 
-  .torpedo-boat {
+  .ships-modal .torpedo-boat,
+  .ships-player .torpedo-boat,
+  .ships-computer .torpedo-boat {
     width: 100px;
   }
 
@@ -89,7 +99,7 @@
   .mini-grid {
     width: 220px;
     height: 220px;
-    bottom: 80px; /* Ajuster selon la hauteur des bateaux */
+    bottom: 80px; 
   }
 
   .mini-grid th,

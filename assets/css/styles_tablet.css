@@ -19,36 +19,46 @@
     flex-direction: column;
   }
   
-  /* ships.css */
-  .aircraft-carrier,
-  .cruiser,
-  .torpedo-boat,
-  .destroyer1,
-  .destroyer2 {
+  /* Bateaux dans la modale et page d'accueil (pas ceux placés sur la grille) */
+  .ships-modal .ship,
+  .ships-player .ship,
+  .ships-computer .ship {
     height: 40px;
     margin: 15px;
   }
 
-  .ship-cell {
+  .ships-modal .ship-cell,
+  .ships-player .ship-cell,
+  .ships-computer .ship-cell {
     width: 40px;
     height: 40px;
     background: transparent;
   }
 
-  .aircraft-carrier {
+  .ships-modal .aircraft-carrier,
+  .ships-player .aircraft-carrier,
+  .ships-computer .aircraft-carrier {
     width: 200px;
   }
 
-  .cruiser {
+  .ships-modal .cruiser,
+  .ships-player .cruiser,
+  .ships-computer .cruiser {
     width: 160px;
   }
 
-  .destroyer1,
-  .destroyer2 {
+  .ships-modal .destroyer1,
+  .ships-modal .destroyer2,
+  .ships-player .destroyer1,
+  .ships-player .destroyer2,
+  .ships-computer .destroyer1,
+  .ships-computer .destroyer2 {
     width: 120px;
   }
 
-  .torpedo-boat {
+  .ships-modal .torpedo-boat,
+  .ships-player .torpedo-boat,
+  .ships-computer .torpedo-boat {
     width: 80px;
   }
 
@@ -86,11 +96,10 @@
     margin-right: 0;
   }
 
-  /* Mini-grille remontée au centre entre les 2 containers */
+  /* Mini-grille */
   .mini-grid {
     width: 165px;
     height: 165px;
-    bottom: 80px; /* Ajuster selon la hauteur des bateaux */
   }
 
   .mini-grid th,
@@ -98,5 +107,39 @@
     width: 15px;
     height: 15px;
     font-size: 6px;
+  }
+
+  /* Mini-grid en mode jeu - positionnée entre les bateaux */
+  .game-started section.ships {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    min-height: 250px;
+  }
+
+  .game-started .ships-player,
+  .game-started .ships-computer {
+    flex: 0 0 auto;
+  }
+
+  .game-started .mini-grid-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+  }
+
+  /* tactile pour le drag and drop sur tablette */
+  .ship.touch-clone {
+    box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
+    transform: scale(1.1);
+  }
+
+  /* Croix plus petites pour la mini-grille tablette */
+  .mini-cell.hit::before,
+  .mini-cell.miss::before {
+    font-size: 0.5rem;
   }
 }

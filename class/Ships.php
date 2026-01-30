@@ -66,16 +66,21 @@ class Ships {
    * @param bool $withId Si true, ajoute un attribut id au bateau
    * @return string Le HTML du bateau
   */
-  public static function renderShip(string $type, int $size, bool $withId = false): string
+  public static function renderShip(string $type, int $size, bool $withId = false, bool $withRotateBtn = false): string
   {
     $idAttribute = $withId ? " id=\"$type\"" : "";
     $html = "<div class=\"ship $type\" data-size=\"$size\" data-orientation=\"horizontal\" data-name=\"$type\" draggable=\"true\"$idAttribute>";
-    
+
+    // Bouton de rotation (optionnel)
+    if ($withRotateBtn) {
+      $html .= "<button type=\"button\" class=\"rotate-btn\" title=\"Pivoter\">↻</button>";
+    }
+
     // Générer les cellules individuelles
     for ($i = 0; $i < $size; $i++) {
       $html .= "<div class=\"ship-cell\" data-cell-index=\"$i\"></div>";
     }
-  
+
     $html .= "</div>";
     return $html;
   }
@@ -83,9 +88,10 @@ class Ships {
   /**
    * Génère tous les bateaux standard du jeu
    * @param bool $withIds Si true, ajoute des attributs id aux bateaux
+   * @param bool $withRotateBtn Si true, ajoute un bouton de rotation
    * @return string Le HTML de tous les bateaux
   */
-  public static function renderAllShips(bool $withIds = false): string
+  public static function renderAllShips(bool $withIds = false, bool $withRotateBtn = false): string
   {
     $ships = [
       'aircraft-carrier' => 5,
@@ -94,12 +100,12 @@ class Ships {
       'destroyer2' => 3,
       'torpedo-boat' => 2
     ];
-    
+
     $html = '';
     foreach ($ships as $type => $size) {
-      $html .= self::renderShip($type, $size, $withIds);
+      $html .= self::renderShip($type, $size, $withIds, $withRotateBtn);
     }
-    
+
     return $html;
   }
   

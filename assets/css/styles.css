@@ -52,6 +52,84 @@ header {
   background-color: var(--background);
 }
 
+/* Mode jeu : cacher visuellement H1, H2, input et bouton play */
+.game-started header h1,
+.game-started header h2,
+.game-started .header-input,
+.game-started .open-modal_btn {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* En mode jeu, centrer le bouton reset */
+.game-started .header-buttons {
+  justify-content: center;
+}
+
+/* Game status - positionné dans le header quand en mode jeu */
+.game-status {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px auto;
+  max-width: 400px;
+}
+
+.game-started .game-status {
+  position: fixed;
+  transform: translateX(-50%);
+  z-index: 100;
+  background-color: var(--background);
+  box-shadow: var(--shadow);
+  font-size: 1.3rem;
+}
+
+.game-status.info {
+  color: var(--police-color);
+}
+
+.game-status.hit,
+.game-status.touche {
+  color: #3498db;
+}
+
+.game-status.miss,
+.game-status.rate {
+  color: #e74c3c;
+}
+
+.game-status.sunk,
+.game-status.coule {
+  color: #9b59b6;
+}
+
+.game-status.warning {
+  color: #f39c12;
+}
+
+.game-status.error {
+  color: #e74c3c;
+}
+
+.game-status.victory {
+  color: #27ae60;
+  font-size: 1.3rem;
+}
+
+.game-status.defeat {
+  color: #c0392b;
+  font-size: 1.3rem;
+}
+
 .header-input {
   width: 200px;
   height: 40px;
@@ -239,7 +317,7 @@ section.ships-computer {
   display: flex;
   border-radius: 60px;
   background: transparent;
-  overflow: hidden;
+  position: relative;
 }
 
 .aircraft-carrier,
@@ -366,20 +444,82 @@ footer p {
 /* Ships modal */
 .ships-modal {
   background-color: transparent;
+  border: none
 }
 
 .ship-cell {
   border: var(--border-grid);
 }
 
-.ship.vertical {
+.ship.vertical,
+.ships-modal .ship.vertical,
+.ships-player .ship.vertical,
+.ships-computer .ship.vertical {
   flex-direction: column;
+  width: auto !important;
+  height: auto !important;
 }
 
 .ship.placed {
   opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.ship.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+}
+
+/* Bouton de rotation */
+.rotate-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--dark-blue);
+  background: var(--sky-blue);
+  color: var(--dark-blue);
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.rotate-btn:hover {
+  background: var(--sea-blue);
+  transform: rotate(90deg);
+}
+
+.ship.placed .rotate-btn {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Indicateur de rotation sur les cellules placées dans la grille */
+.rotate-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sky-blue);
+  border: 2px solid var(--dark-blue);
+  color: var(--dark-blue);
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
 }
 
 /* Ship-cells placées dans la grille */
@@ -389,6 +529,7 @@ td .ship-cell {
   height: 100%;
   border: none;
   margin: 0;
+  position: relative;
 }
 
 /* Border-radius Horizontal */
@@ -427,36 +568,32 @@ td .ship-cell.torpedo-boat {
 }
 
 /* Styles pour les tirs */
-td.hit {
-  background-color: var(--dark-blue);
-  position: relative;
-}
-
-td.hit::after {
-  content: "✕";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #3498db;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
+td.hit,
 td.miss {
   background-color: var(--dark-blue);
   position: relative;
 }
 
+td.hit::after,
 td.miss::after {
   content: "✕";
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #e74c3c;
-  font-size: 1.5rem;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
   font-weight: bold;
+  line-height: 1;
+  pointer-events: none;
+}
+
+td.hit::after {
+  color: #3498db;
+}
+
+td.miss::after {
+  color: #e74c3c;
 }
 
 td.sunk::after {

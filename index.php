@@ -92,7 +92,7 @@ if (isset($_SESSION['playerShips']) && isset($_SESSION['gameStarted'])) {
   <title>BattleShip</title>
 </head>
 
-<body data-open-modal="<?php echo ($playerName && !$shipsPlaced) ? 'true' : 'false'; ?>">
+<body data-open-modal="<?php echo ($playerName && !$shipsPlaced) ? 'true' : 'false'; ?>"<?php echo $shipsPlaced ? ' class="game-started"' : ''; ?>>
   <header>
     <h1>Bienvenue !</h1>
     <h2>Inscris ton nom et démarre ton aventure maritime !</h2>
@@ -123,6 +123,7 @@ if (isset($_SESSION['playerShips']) && isset($_SESSION['gameStarted'])) {
         <h3 id="player-title"><?php echo $player ? htmlspecialchars($player->getPlayerName(), ENT_QUOTES, 'UTF-8') : 'Joueur'; ?></h3>
         <!-- Affiche les bateaux restants du joueur 1 à gauche -->
         <div class="ships-container-player">
+          <!-- Affiche les bateaux côté player à gauche -->
           <?php echo Ships::renderAllShips(false); ?>
         </div>
       </div>
@@ -130,7 +131,7 @@ if (isset($_SESSION['playerShips']) && isset($_SESSION['gameStarted'])) {
       <div class="ships-computer" aria-labelledby="computer-title">
         <h3 id="computer-title">Ordinateur </h3>
         <div class="ships-container-computer">
-          <!-- Affiche les bateaux restants de l'ordinateur à droite-->
+          <!-- Affiche les bateaux côté ordinateur à droite -->
           <?php echo Ships::renderAllShips(false); ?>
         </div>
       </div>
@@ -154,7 +155,7 @@ if (isset($_SESSION['playerShips']) && isset($_SESSION['gameStarted'])) {
       <p id="modal-description">Place les bateaux sur la grille ! <br> Clique dessus pour les positionner à la verticale ou à l'horizontale et sauvegarde.</p>
       <div class="content">
         <div class="ships-modal">
-          <?php echo Ships::renderAllShips(true); ?>
+          <?php echo Ships::renderAllShips(true, true); ?>
         </div>
         <?php echo $board->displayGrid([], 'modalGrid'); ?>
         <button class="close-modal-btn toggle-modal" aria-label="Fermer la fenêtre">X</button>
@@ -167,8 +168,8 @@ if (isset($_SESSION['playerShips']) && isset($_SESSION['gameStarted'])) {
 
   <!-- <script src="assets/js/models/modale.js"></script>
   <script src="assets/js/models/grid.js"></script> -->
+  <!-- <script src="assets/js/models/dragAndDrop.js"></script> -->
   <script src="assets/js/script.js" type="module"></script>
-  <script src="assets/js/models/dragAndDrop.js"></script>
 </body>
 
 </html>
