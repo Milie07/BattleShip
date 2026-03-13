@@ -19,7 +19,7 @@ use App\class\Ships;
 class GameService
 {
     /**
-     * Pattern de validation des coordonnées (A1-J10)
+     * Modèle de validation des coordonnées (A1-J10)
      */
     private const COORDINATE_PATTERN = '/^[A-J](10|[1-9])$/';
 

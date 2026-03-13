@@ -8,7 +8,7 @@ namespace App\class\Interfaces;
  * PlayerInterface - Contrat pour les joueurs du jeu de bataille navale
  *
  * Définit les méthodes essentielles qu'un joueur (humain ou IA) doit implémenter.
- * Permet l'injection de dépendances et facilite les tests unitaires avec des mocks.
+ * Permet l'injection de dépendances et facilite les tests unitaires.
  *
  * @package App\class\Interfaces
  */

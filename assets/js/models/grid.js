@@ -46,10 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
       updateStatus("Vous avez déjà tiré sur cette case !", "warning");
       return;
     }
-
     isPlayerTurn = false;
     updateStatus("Tir en cours...", "info");
-
+    
     try {
       const response = await fetch("api/fire-shot.php", {
         method: "POST",
@@ -58,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: JSON.stringify({ coordinate: coordinate }),
       });
-
       const data = await response.json();
 
       if (!data.success) {

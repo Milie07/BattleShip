@@ -55,7 +55,7 @@ try {
     // Initialiser le service
     $gameService = new GameService();
 
-    // Récupérer l'objet Game depuis la session
+    // Récupération de la partie en cours
     $game = unserialize($_SESSION['game']);
 
     // Traiter le tir via le service
