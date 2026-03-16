@@ -1,3 +1,7 @@
+/*********************************************
+OUVERTURE DE LA MODALE
+**********************************************/
+
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.querySelector(".modal");
   const toggleTriggers = document.querySelectorAll(".toggle_modal");
