@@ -143,7 +143,7 @@ class PlayerTest extends TestCase
 
         $result = $this->player->receiveShot('B1', 'Adversaire');
 
-        $this->assertEquals('RATE', $result);
+        $this->assertEquals('RATE', $result['result']);
     }
 
     /**
@@ -155,7 +155,7 @@ class PlayerTest extends TestCase
 
         $result = $this->player->receiveShot('A1', 'Adversaire');
 
-        $this->assertEquals('TOUCHE', $result);
+        $this->assertEquals('TOUCHE', $result['result']);
     }
 
     /**
@@ -168,7 +168,7 @@ class PlayerTest extends TestCase
         $this->player->receiveShot('A1', 'Adversaire');
         $result = $this->player->receiveShot('A2', 'Adversaire');
 
-        $this->assertEquals('COULE', $result);
+        $this->assertEquals('COULE', $result['result']);
     }
 
     /**
@@ -181,7 +181,7 @@ class PlayerTest extends TestCase
         $this->player->receiveShot('A1', 'Adversaire');
         $result = $this->player->receiveShot('A1', 'Adversaire');
 
-        $this->assertEquals('DEJA_TIRE', $result);
+        $this->assertEquals('DEJA_TIRE', $result['result']);
     }
 
     /**
